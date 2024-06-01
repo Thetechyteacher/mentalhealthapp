@@ -1,0 +1,10 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "mentalhealthapp"
+resolve_s3 = true
+s3_prefix = "mentalhealthapp"
+region = "eu-west-1"
+profile = "monica"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

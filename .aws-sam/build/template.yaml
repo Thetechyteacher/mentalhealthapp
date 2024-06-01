@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS Serverless Application Model template for an Express app with
+  MongoDB.
+Resources:
+  ExpressAppFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: server.handler
+      Runtime: nodejs18.x
+      MemorySize: 128
+      Timeout: 119
+      CodeUri: ExpressAppFunction
+      Environment:
+        Variables:
+          DB_STRING: mongodb+srv://authApp:A1yCupmSMBdNmlBS@authapp.c6zjxaf.mongodb.net/?retryWrites=true&w=majority&appName=authApp
+          NODE_ENV: lambda
+          PORT: '2121'
+      Events:
+        RootPath:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+        MarkComplete:
+          Type: Api
+          Properties:
+            Path: /markComplete
+            Method: PUT
+        MarkUncomplete:
+          Type: Api
+          Properties:
+            Path: /markUnComplete
+            Method: PUT
+        deleteItem:
+          Type: Api
+          Properties:
+            Path: /deleteItem
+            Method: DELETE
+        addTodo:
+          Type: Api
+          Properties:
+            Path: /addTodo
+            Method: POST
+      Policies:
+      - AWSLambdaBasicExecutionRole
+    Metadata:
+      SamResourceId: ExpressAppFunction
+Outputs:
+  ApiUrl:
+    Description: URL for the API
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/
